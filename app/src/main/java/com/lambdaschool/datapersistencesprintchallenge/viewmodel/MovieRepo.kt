@@ -1,7 +1,6 @@
 package com.lambdaschool.datapersistencesprintchallenge.viewmodel
 
 import android.content.Context
-import android.os.AsyncTask
 import androidx.lifecycle.LiveData
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.db.MovieDBDao
@@ -21,7 +20,7 @@ class MovieRepo(context: Context) {
 
 
 
-        MovieDBdao = database.MovieDBDao()
+        MovieDBdao = database.movieDBDao()
         allMovies = MovieDBdao.getAllMovies()
 
 

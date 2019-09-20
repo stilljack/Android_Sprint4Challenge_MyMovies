@@ -2,6 +2,7 @@ package com.lambdaschool.datapersistencesprintchallenge.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.lambdaschool.datapersistencesprintchallenge.R
 
 class FavActivity : AppCompatActivity() {
 

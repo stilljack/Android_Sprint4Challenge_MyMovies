@@ -13,7 +13,7 @@ import com.lambdaschool.datapersistencesprintchallenge.model.MovieMockData
 
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
-    abstract fun MovieDBDao(): MovieDBDao
+    abstract fun movieDBDao(): MovieDBDao
 
     companion object {
         private var instance: MovieDatabase? = null
@@ -48,7 +48,7 @@ abstract class MovieDatabase : RoomDatabase() {
 
     //Mock Data here
     class PopulateDbAsyncTask(db: MovieDatabase?) : AsyncTask<Unit, Unit, Unit>() {
-        private val movieDBDao = db?.MovieDBDao()
+        private val movieDBDao = db?.movieDBDao()
 
         override fun doInBackground(vararg p0: Unit?) {
             MovieMockData.MovieList.forEach {
