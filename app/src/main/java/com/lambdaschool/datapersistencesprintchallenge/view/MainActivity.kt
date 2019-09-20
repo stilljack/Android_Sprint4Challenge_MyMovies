@@ -32,6 +32,8 @@ class MainActivity : AppCompatActivity() {
         setupRecyclerView()
 
         btn_search.setOnClickListener {
+            movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
+            updateRecyclerView(MovieListAdapter(),movieViewModel.getSearchMovies(et_movie.text.toString(), API_KEY_PARAM))
 
         }
     }
@@ -46,9 +48,12 @@ class MainActivity : AppCompatActivity() {
 
         movieViewModel = ViewModelProviders.of(this).get(MovieViewModel::class.java)
 
-        movieViewModel.getAllMovie().observe(this, Observer<List<Movie>> {
+    /*   live data for
+
+    movieViewModel.getAllMovie().observe(this, Observer<List<Movie>> {
+
             updateRecyclerView(adapter, it as MutableList<Movie>)
-        })
+        })*/
 
         adapter.setOnItemClickListener(object : MovieListAdapter.OnItemClickListener {
             override fun onItemClick(movie: Movie) {
@@ -61,8 +66,8 @@ class MainActivity : AppCompatActivity() {
 
 
     //todo::why this?
-    fun updateRecyclerView(adapter: MovieListAdapter, pokemonList: MutableList<Movie>) {
-        adapter.submitList(pokemonList as List<Movie>)
+    fun updateRecyclerView(adapter: MovieListAdapter, movieList: MutableList<Movie>) {
+        adapter.submitList(movieList as List<Movie>)
         adapter.notifyDataSetChanged()
     }
 

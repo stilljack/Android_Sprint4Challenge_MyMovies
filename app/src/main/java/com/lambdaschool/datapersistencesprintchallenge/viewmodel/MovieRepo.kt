@@ -1,14 +1,16 @@
 package com.lambdaschool.datapersistencesprintchallenge.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.db.MovieDBDao
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.db.MovieDatabase
+import com.lambdaschool.datapersistencesprintchallenge.viewmodel.retrofit.MovieRetroDao
 
 
 class MovieRepo(context: Context) {
-
+    var contxt = context
     companion object {
         var tempMovieList:MutableList<Movie> = mutableListOf<Movie>()
     }
@@ -28,6 +30,11 @@ class MovieRepo(context: Context) {
         allMovies = MovieDBdao.getAllMovies()
 
 
+    }
+
+    fun getSearchMovies(search:String,api_key:String) :MutableList<Movie>{
+
+        return MovieRetroDao().makeMovieSearchList(search,contxt)
     }
     fun getAllMovies(): LiveData<List<Movie>> {
         return allMovies

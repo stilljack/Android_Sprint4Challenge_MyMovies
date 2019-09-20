@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
+import com.lambdaschool.datapersistencesprintchallenge.viewmodel.retrofit.MovieRetroDao
 
 //viewmodel modifys dao modifys database
 class MovieViewModel (application: Application) : AndroidViewModel(application){
@@ -11,6 +12,10 @@ class MovieViewModel (application: Application) : AndroidViewModel(application){
         MovieRepo(application)
     private var allMovies: LiveData<List<Movie>> = repository.getAllMovies()
 
+
+    fun getSearchMovies(search:String,api_key:String):MutableList<Movie>{
+        return repository.getSearchMovies(search,api_key)
+    }
     fun getAllMovie(): LiveData<List<Movie>> {
         return allMovies
     }
