@@ -8,6 +8,10 @@ import com.lambdaschool.datapersistencesprintchallenge.viewmodel.db.MovieDatabas
 
 
 class MovieRepo(context: Context) {
+
+    companion object {
+        var tempMovieList:MutableList<Movie> = mutableListOf<Movie>()
+    }
     private var MovieDBdao: MovieDBDao
 
     private var allMovies: LiveData<List<Movie>>

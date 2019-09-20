@@ -31,35 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         setupRecyclerView()
 
-        btn_search.setOnClickListener{
-            fun makeMovieSearchList(search:String, context: Context) {
+        btn_search.setOnClickListener {
 
-                var apiInterface = MovieRetroApi.Factory.create()
-
-                    apiInterface.getMoviesSearch(et_movie.text.toString(),API_KEY_PARAM)
-                        .enqueue(object : Callback<MovieSearchResult> {
-                            override fun onFailure(call: Call<MovieSearchResult>, t: Throwable) {
-                                t.printStackTrace()
-                                val response = "faliure; ${t.message}"
-                                Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
-                            }
-
-                            override fun onResponse(
-                                call: Call<MovieSearchResult>,
-                                response: Response<MovieSearchResult>
-                            ) {
-                                val newciv: MovieSearchResult? = response.body()
-                                if (newciv != null) {
-
-                                    Toast.makeText(context, "success! $response", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                        })
-
-                }
-            makeMovieSearchList(et_movie.text.toString(),this)
         }
-
     }
 
     fun setupRecyclerView() {
