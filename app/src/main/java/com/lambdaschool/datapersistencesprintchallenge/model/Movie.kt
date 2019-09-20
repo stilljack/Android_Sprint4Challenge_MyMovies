@@ -1,4 +1,4 @@
-package com.lambdaschool.sprint4challenge_mymovies.model
+package com.lambdaschool.datapersistencesprintchallenge.model
 
 class MovieSearchResult(val results: List<Movie>)
 
