@@ -7,36 +7,30 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
+import com.lambdaschool.datapersistencesprintchallenge.model.MovieMockData
+
+//format comes from 
 
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
-abstract class Movieatabase : RoomDatabase() {
+abstract class MovieDatabase : RoomDatabase() {
     abstract fun MovieDBDao(): MovieDBDao
-}
-
-
-//the following is code from the AH last night I may want to refer to, it's here for ease of my reference
-/*
-@Database(entities =[Pokemon::class], exportSchema = true,version = 2)
-abstract class PokemonDatabase : RoomDatabase() {
-
-    abstract fun pokemonDao(): PokemonDao
 
     companion object {
-        private var instance: PokemonDatabase? = null
+        private var instance: MovieDatabase? = null
 
-        fun getInstance(context: Context): PokemonDatabase? {
+        fun getInstance(context: Context): MovieDatabase? {
             if (instance == null) {
-                synchronized(PokemonDatabase::class) {
+                synchronized(MovieDatabase::class) {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
-                        PokemonDatabase::class.java, "pokemon_database"
+                        MovieDatabase::class.java, "movie_database"
                     )
                         .fallbackToDestructiveMigration() // when version increments, it migrates (deletes db and creates new) - else it crashes
                         .addCallback(roomCallback)
                         .build()
                 }
             }
-            return instance as PokemonDatabase
+            return instance as MovieDatabase
         }
 
         fun destroyInstance() {
@@ -53,13 +47,14 @@ abstract class PokemonDatabase : RoomDatabase() {
     }
 
     //Mock Data here
-    class PopulateDbAsyncTask(db: PokemonDatabase?) : AsyncTask<Unit, Unit, Unit>() {
-        private val pokemonDao = db?.pokemonDao()
+    class PopulateDbAsyncTask(db: MovieDatabase?) : AsyncTask<Unit, Unit, Unit>() {
+        private val movieDBDao = db?.MovieDBDao()
 
         override fun doInBackground(vararg p0: Unit?) {
-            PokemonMockData.pokemonList.forEach {
-                pokemonDao?.insert(it)
+            MovieMockData.MovieList.forEach {
+                movieDBDao?.insert(it)
             }
         }
     }
-}*/
+}
+
