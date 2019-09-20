@@ -9,7 +9,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
 import com.lambdaschool.datapersistencesprintchallenge.model.MovieMockData
 
-//format comes from 
+//format comes from
 
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class MovieDatabase : RoomDatabase() {
