@@ -1,8 +1,8 @@
 package com.lambdaschool.sprint4challenge_mymovies.model
 
-class MovieSearchResult(val results: List<MovieOverview>)
+class MovieSearchResult(val results: List<Movie>)
 
-class MovieOverview(
+class Movie(
         val id: Int,
         val original_language: String,
         val original_title: String,
