@@ -1,15 +1,24 @@
 package com.lambdaschool.datapersistencesprintchallenge.view
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.lambdaschool.datapersistencesprintchallenge.R
+import com.lambdaschool.datapersistencesprintchallenge.apiaccess.MovieConstants.API_KEY_PARAM
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
+import com.lambdaschool.datapersistencesprintchallenge.model.MovieSearchResult
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.MovieViewModel
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.recycleview.MovieListAdapter
+import com.lambdaschool.datapersistencesprintchallenge.viewmodel.retrofit.MovieRetroApi
 import kotlinx.android.synthetic.main.activity_main.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import kotlin.random.Random
 
 /// init: yikes first line written an hour late...
 /// almost like something went wrong....  hahah here we go
@@ -21,6 +30,36 @@ class MainActivity : AppCompatActivity() {
 
 
         setupRecyclerView()
+
+        btn_search.setOnClickListener{
+            fun makeMovieSearchList(search:String, context: Context) {
+
+                var apiInterface = MovieRetroApi.Factory.create()
+
+                    apiInterface.getMoviesSearch(et_movie.text.toString(),API_KEY_PARAM)
+                        .enqueue(object : Callback<MovieSearchResult> {
+                            override fun onFailure(call: Call<MovieSearchResult>, t: Throwable) {
+                                t.printStackTrace()
+                                val response = "faliure; ${t.message}"
+                                Toast.makeText(context, response, Toast.LENGTH_SHORT).show()
+                            }
+
+                            override fun onResponse(
+                                call: Call<MovieSearchResult>,
+                                response: Response<MovieSearchResult>
+                            ) {
+                                val newciv: MovieSearchResult? = response.body()
+                                if (newciv != null) {
+
+                                    Toast.makeText(context, "success! $response", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+                        })
+
+                }
+            makeMovieSearchList(et_movie.text.toString(),this)
+        }
+
     }
 
     fun setupRecyclerView() {
