@@ -39,7 +39,7 @@ class MovieRepo(context: Context) {
     }
 
     fun delete(movie: Movie) {
-        
+
     }
 
     fun deleteAllMovies() {
