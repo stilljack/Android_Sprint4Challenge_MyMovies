@@ -30,4 +30,7 @@ interface MovieDBDao{
 
     @Query("SELECT * FROM movie_table")
     fun getAllMovies(): LiveData<List<Movie>>
+
+    @Query("SELECT * FROM movie_table WHERE title like :title")
+    fun getLastSearchMovies(title:String): List<Movie>
 }

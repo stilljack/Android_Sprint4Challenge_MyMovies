@@ -12,11 +12,11 @@ import androidx.recyclerview.widget.DiffUtil
 
 class MovieListAdapter : ListAdapter<Movie,MovieListAdapter.movieholder>(DIFF_CALLBACK) {
 // i need to figure out why or if this is necessary
-    //looking into recycler and livedata intersecting
+    //look into recycler and livedata intersecting
         companion object {
             private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<Movie>() {
                 override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                    return oldItem.id == newItem.id
+                    return oldItem.original_title == newItem.original_title
                 }
 
                 override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {

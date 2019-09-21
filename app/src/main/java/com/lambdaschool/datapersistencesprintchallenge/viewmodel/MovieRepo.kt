@@ -1,12 +1,20 @@
 package com.lambdaschool.datapersistencesprintchallenge.viewmodel
 
 import android.content.Context
+import android.os.AsyncTask
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
+import com.lambdaschool.datapersistencesprintchallenge.apiaccess.MovieConstants
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
+import com.lambdaschool.datapersistencesprintchallenge.model.MovieSearchResult
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.db.MovieDBDao
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.db.MovieDatabase
+import com.lambdaschool.datapersistencesprintchallenge.viewmodel.retrofit.MovieRetroApi
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.retrofit.MovieRetroDao
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MovieRepo(context: Context) {
@@ -14,34 +22,68 @@ class MovieRepo(context: Context) {
     companion object {
         var tempMovieList:MutableList<Movie> = mutableListOf<Movie>()
     }
-    private var MovieDBdao: MovieDBDao
+    private var movieDBdao: MovieDBDao
 
     private var allMovies: LiveData<List<Movie>>
+    private var workinStorage:MutableList<Movie> = mutableListOf()
+
 
     init {
         //I think we get a singleton out of this move, although I'm a little sketched out by it
         val database: MovieDatabase = MovieDatabase.getInstance(
             context
         )!!
-
-
-
-        MovieDBdao = database.movieDBDao()
-        allMovies = MovieDBdao.getAllMovies()
+        movieDBdao = database.movieDBDao()
+        allMovies = movieDBdao.getAllMovies()
 
 
     }
 
-    fun getSearchMovies(search:String,api_key:String) :MutableList<Movie>{
+    fun getSearchMovies(search:String,api_key:String):MutableList<Movie> {
+        tempMovieList= mutableListOf<Movie>()
 
-        return MovieRetroDao().makeMovieSearchList(search,contxt)
+
+            val apiInterface = MovieRetroApi.Factory.create()
+            val mutlist= mutableListOf<Movie>()
+            apiInterface.getMoviesSearch(search, api_key)
+                .enqueue(object : Callback<MovieSearchResult> {
+                    override fun onFailure(call: Call<MovieSearchResult>, t: Throwable) {
+                        t.printStackTrace()
+                        val response = "faliure; ${t.message}"
+
+                    }
+
+                    override fun onResponse(
+                        call: Call<MovieSearchResult>,
+                        response: Response<MovieSearchResult>
+                    ) {
+                        val newMovList: MovieSearchResult? = response.body() as MovieSearchResult
+                        newMovList?.results?.forEach {
+                            tempMovieList.add(it)
+                            mutlist.add(it)
+                            insert(it)
+                        }
+                    }
+                })
+
+
+        return tempMovieList
     }
     fun getAllMovies(): LiveData<List<Movie>> {
         return allMovies
     }
 
-    fun insert(movie: Movie) {
+    fun getLastSearchMovies(search:String): List<Movie> {
+        val searchAsyncTask = getSearchedAsyncTask(
+            movieDBdao
+        ).execute(search).get()
+        return searchAsyncTask
+    }
 
+    fun insert(movie:Movie) {
+        val insertMovieAsyncTask = insertMovieAsyncTask(
+            movieDBdao
+        ).execute(movie)
     }
 
     fun update(movie: Movie) {
@@ -55,6 +97,38 @@ class MovieRepo(context: Context) {
     fun deleteAllMovies() {
     }
 
+    private class getSearchedAsyncTask (movieDao:MovieDBDao):
+        AsyncTask<String, Unit, List<Movie>>() {
+        val movieDBdao = movieDao
+
+        override fun doInBackground(vararg p0: String?): List<Movie> {
+            var searchedMovies= movieDBdao.getLastSearchMovies(p0[0]!!)
+            return searchedMovies
+        }
+
+
+
+
+    }
+
+    private class insertMovieAsyncTask(movieDao: MovieDBDao) :
+        AsyncTask<Movie, Unit, Unit>() {
+        val movieDBdao = movieDao
+
+        override fun doInBackground(vararg p0: Movie?) {
+            movieDBdao.insert(p0[0]!!)
+        }
+    }
+
+
+/*    private class InsertPokemonAsyncTask(pokemonDao: PokemonDao) :
+        AsyncTask<Movie, Unit, Unit>() {
+        val PokemonDao = pokemonDao
+
+        override fun doInBackground(vararg p0: Pokemon?) {
+            PokemonDao.insert(p0[0]!!)
+        }
+    }*/
 }
    /* fun pokemonByNumber(id:Int):Pokemon {
         val allRealPokemon =allPokemon.value

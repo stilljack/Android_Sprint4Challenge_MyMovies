@@ -12,9 +12,13 @@ class MovieViewModel (application: Application) : AndroidViewModel(application){
         MovieRepo(application)
     private var allMovies: LiveData<List<Movie>> = repository.getAllMovies()
 
+    fun SearchMovies(search:String, api_key:String):MutableList<Movie>{
 
-    fun getSearchMovies(search:String,api_key:String):MutableList<Movie>{
         return repository.getSearchMovies(search,api_key)
+    }
+
+    fun getLastSearchMovies(search:String):MutableList<Movie> {
+        return repository.getLastSearchMovies(search) as MutableList<Movie>
     }
     fun getAllMovie(): LiveData<List<Movie>> {
         return allMovies

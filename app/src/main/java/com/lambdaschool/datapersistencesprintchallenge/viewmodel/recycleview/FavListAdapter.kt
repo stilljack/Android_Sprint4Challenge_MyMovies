@@ -8,9 +8,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
 import kotlinx.android.synthetic.main.rv_cv_search_list.view.*
 import androidx.recyclerview.widget.DiffUtil
+import com.lambdaschool.datapersistencesprintchallenge.viewmodel.MovieRepo.Companion.tempMovieList
 
 
-class FavListAdapter : ListAdapter<Movie,FavListAdapter.movieholder>(list:MutableList) {
+class FavListAdapter : RecyclerView.Adapter<FavListAdapter.movieholder>() {
 
 
     private var listener: OnItemClickListener? = null
@@ -19,9 +20,9 @@ class FavListAdapter : ListAdapter<Movie,FavListAdapter.movieholder>(list:Mutabl
         val itemView: View = LayoutInflater.from(parent.context).inflate(com.lambdaschool.datapersistencesprintchallenge.R.layout.rv_cv_search_list, parent, false)
         return movieholder(itemView)
     }
-
+    override fun getItemCount() = tempMovieList.size
     override fun onBindViewHolder(holder: movieholder, position: Int) {
-        val currentMovie: Movie = getItem(position)
+        val currentMovie: Movie = tempMovieList[position]
         holder.tvName.text = currentMovie.title
         holder.tvFavorite.text= currentMovie.isFavorite.toString()
         holder.tvWatched.text=currentMovie.isWatched.toString()
@@ -33,10 +34,10 @@ class FavListAdapter : ListAdapter<Movie,FavListAdapter.movieholder>(list:Mutabl
 
 
     fun getMovieAt(position: Int): Movie {
-        return getItem(position)
+        return tempMovieList[position]
     }
 
-    inner class movieholder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class movieholder(view: View) : RecyclerView.ViewHolder(view) {
         var tvFavorite= itemView.tv_favorite
         var tvName= itemView.tv_movie_name
         var tvWatched =itemView.tv_watched
@@ -46,7 +47,7 @@ class FavListAdapter : ListAdapter<Movie,FavListAdapter.movieholder>(list:Mutabl
             itemView.setOnClickListener {
                 val position = adapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    listener?.onItemClick(getItem(position))
+                    listener?.onItemClick(tempMovieList[position])
                 }
             }
         }
