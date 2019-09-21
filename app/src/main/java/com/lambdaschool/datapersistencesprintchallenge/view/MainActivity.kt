@@ -49,7 +49,6 @@ class MainActivity : AppCompatActivity() {
 
            updateRecyclerView(adapter, it as MutableList<Movie>)
        })
-
                 adapter.setOnItemClickListener(object : MovieListAdapter.OnItemClickListener {
             override fun onItemClick(movie: Movie) {
                 val view = et_movie

@@ -3,13 +3,11 @@ package com.lambdaschool.datapersistencesprintchallenge.viewmodel.recycleview
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.lambdaschool.datapersistencesprintchallenge.R
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
 import kotlinx.android.synthetic.main.rv_cv_search_list.view.*
-import androidx.recyclerview.widget.DiffUtil
 import com.lambdaschool.datapersistencesprintchallenge.viewmodel.MovieRepo.Companion.tempMovieList
-
 
 class FavListAdapter : RecyclerView.Adapter<FavListAdapter.movieholder>() {
 
@@ -17,7 +15,7 @@ class FavListAdapter : RecyclerView.Adapter<FavListAdapter.movieholder>() {
     private var listener: OnItemClickListener? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): movieholder {
-        val itemView: View = LayoutInflater.from(parent.context).inflate(com.lambdaschool.datapersistencesprintchallenge.R.layout.rv_cv_search_list, parent, false)
+        val itemView: View = LayoutInflater.from(parent.context).inflate(R.layout.rv_cv_fav_list, parent, false)
         return movieholder(itemView)
     }
     override fun getItemCount() = tempMovieList.size

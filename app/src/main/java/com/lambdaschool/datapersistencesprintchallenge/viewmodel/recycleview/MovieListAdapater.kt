@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.lambdaschool.datapersistencesprintchallenge.model.Movie
 import kotlinx.android.synthetic.main.rv_cv_search_list.view.*
 import androidx.recyclerview.widget.DiffUtil
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.model.GlideUrl
+import com.lambdaschool.datapersistencesprintchallenge.R
 
 
 class MovieListAdapter : ListAdapter<Movie,MovieListAdapter.movieholder>(DIFF_CALLBACK) {
@@ -40,7 +43,10 @@ class MovieListAdapter : ListAdapter<Movie,MovieListAdapter.movieholder>(DIFF_CA
         holder.tvName.text = currentMovie.title
         holder.tvFavorite.text= currentMovie.isFavorite.toString()
         holder.tvWatched.text=currentMovie.isWatched.toString()
-        //todo:ADD POSTERS
+        Glide.with(holder.itemView)
+            .load("https://image.tmdb.org/t/p/w500${currentMovie.poster_path}")
+            .error(R.drawable.ic_launcher_background)
+            .into(holder.ivPoster)
 
         //holder.ivPoster
 

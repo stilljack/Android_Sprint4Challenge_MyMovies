@@ -6,7 +6,7 @@ import com.lambdaschool.datapersistencesprintchallenge.model.Movie
 
 @Dao
 interface MovieDBDao{
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insert(movie: Movie)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
