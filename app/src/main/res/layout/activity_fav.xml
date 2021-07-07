@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.MainActivity">
+    tools:context=".view.FavActivity">
     <EditText
-        android:id="@+id/et_movie"
-        android:hint="Enter Movie Name"
+        android:id="@+id/et_favorites"
+        android:hint="Enter favorites Name"
         android:layout_width="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_height="wrap_content"/>
     <Button
-        android:id="@+id/btn_search"
+        android:id="@+id/btn_favorites_two"
         android:layout_width="wrap_content"
-        android:text="Search"
+        android:text="button 2 "
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_movie"
+        app:layout_constraintTop_toBottomOf="@id/et_favorites"
         android:layout_height="wrap_content"/>
     <Button
-        android:id="@+id/btn_favorites"
+        android:id="@+id/btn_favorites_one"
         android:layout_width="wrap_content"
-        android:text="Go to Favorites"
+        android:text="Go to Main"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/et_movie"
+        app:layout_constraintTop_toBottomOf="@id/et_favorites"
         android:layout_height="wrap_content"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_movie_list"
+        android:id="@+id/rv_fav_list"
         android:layout_width="match_parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_favorites"
+        app:layout_constraintTop_toBottomOf="@id/btn_favorites_one"
         android:layout_height="0dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

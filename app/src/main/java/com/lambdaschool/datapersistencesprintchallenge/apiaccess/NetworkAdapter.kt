@@ -1,4 +1,4 @@
-package com.lambdaschool.sprint4challenge_mymovies.apiaccess
+package com.lambdaschool.datapersistencesprintchallenge.apiaccess
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

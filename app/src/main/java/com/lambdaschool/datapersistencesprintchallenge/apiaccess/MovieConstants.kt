@@ -1,4 +1,4 @@
-package com.lambdaschool.sprint4challenge_mymovies.apiaccess
+package com.lambdaschool.datapersistencesprintchallenge.apiaccess
 
 object MovieConstants {
     const val BASE_URL = "https://api.themoviedb.org/3/"
